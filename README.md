@@ -17,7 +17,7 @@ julia init.jl
 ## Getting started
 - Linux
     - ```bash
-        bash dump.sh /path/folder
+        bash dump.sh /path/folder/
         # or
         bash dump.sh music1.ncm music2.ncm
         ```
