@@ -14,6 +14,8 @@
 julia init.jl
 ```
 
+(optional) AES
+
 ## Getting started
 - Linux
     - ```bash
