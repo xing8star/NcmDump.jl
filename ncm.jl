@@ -4,10 +4,9 @@ using NcmDump
 for i in ARGS
     println(i)
     if isdirpath(i)
-        files=first(walkdir(i))[3]
-        files=i.*files
+        files=readdir(i, join=true)
         Threads.@threads :dynamic for z in files
-        println(z)
+            println(z)
             ncmdecode(z)
         end
     else

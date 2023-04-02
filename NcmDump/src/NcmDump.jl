@@ -1,7 +1,7 @@
 module NcmDump
  	
-    using Base64
-    using JSON3
+    using Base64:base64decode
+    import JSON3
     using AES
 
     const core_key = hex2bytes("687A4852416D736F356B496E62617857")
@@ -58,7 +58,6 @@ module NcmDump
         cryptor = AESCipher(;key_length=128, mode=AES.ECB, key=AES128Key(meta_key))
         ct=AES.CipherText(meta_data,nothing,128,AES.ECB)
 
-
         meta_data= String(decrypt(ct, cryptor)[7:end])
 
         meta_data = JSON3.read(meta_data)
@@ -68,14 +67,11 @@ module NcmDump
         image_size = read(f,4)
         image_size = unpack(image_size)
         image_data = read(f,image_size)
-        file_upper_path=splitpath(file_path)
-        file=file_upper_path[end]
-        file_upper_path=joinpath(file_upper_path[begin:end-1]...)
-        file=file |> x->split(x,".ncm")[begin]
-        m=open(joinpath(file_upper_path, file * ".jpg"), "w")
-        write(m,image_data)
-        close(m)
-        file_name = joinpath(file_upper_path,file * '.' * meta_data["format"])
+        file_upper_path,_=splitext(file_path)
+        open(file_upper_path*".jpg", "w") do io
+        	write(io,image_data)
+        end
+        file_name = joinpath(file_upper_path* '.' * meta_data["format"])
         m = open(file_name, "w")
 
         while true
