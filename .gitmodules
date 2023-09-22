@@ -1,3 +1,0 @@
-[submodule "NcmDump/AES"]
-	path = NcmDump/AES
-	url = https://github.com/kanav99/AES.jl
